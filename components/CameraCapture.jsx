@@ -2,6 +2,7 @@
 import { useRef, useEffect, useState } from "react";
 import * as faceapi from "face-api.js";
 import io from "socket.io-client";
+import { Play , Square } from "lucide-react";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 const socket = io(SOCKET_URL);
@@ -34,9 +35,9 @@ export default function CameraCapture() {
         return;
       }
 
-      if (data.matched_user_id) {
+      if (data.user_id) {
         setStatus(
-          `🎉 Recognized User: ${data.matched_user_id} (Conf: ${data.confidence?.toFixed(
+          `🎉 Recognized User: ${data.user_id} (Conf: ${data.confidence?.toFixed(
             2
           )})`
         );
@@ -99,7 +100,7 @@ export default function CameraCapture() {
             meta: { location: "Main Gate" },
           });
         }
-      }, 800);
+      }, 1000);
     } catch (err) {
       setStatus("Camera error: " + err.message);
     }
@@ -117,27 +118,30 @@ export default function CameraCapture() {
 
   return (
     <div>
-      <video
-        ref={videoRef}
-        width={640}
-        height={480}
-        style={{ border: "1px solid #ccc", marginBottom: 10 }}
-      />
+      <div className="shadow-lg border border-gray-400 rounded-md mb-5">
+        <video
+          ref={videoRef}
+          width={640}
+          height={480}
+        />
+      </div>
 
-      <div style={{ marginBottom: 10, fontSize: "18px", fontWeight: "bold" }}>
+      <div className="font-semibold text-xl mb-5 text-center">
         {status}
       </div>
 
-      <button
-        onClick={startCamera}
-        style={{ padding: "10px 20px", marginRight: 10 }}
-      >
-        ▶ Start Camera
-      </button>
+      <div className="flex items-center justify-center gap-7">
+        <button className="border-cyan-500 border px-3 py-2 rounded-lg cursor-pointer bg-cyan-500 mb-5 flex items-center gap-2"
+          onClick={startCamera}
+        ><Play size={20} /> Start Camera
+        </button>
 
-      <button onClick={stopCamera} style={{ padding: "10px 20px" }}>
-        ⏹ Stop Camera
-      </button>
+        <button className="border-amber-300 border px-3 py-2 rounded-lg cursor-pointer bg-amber-300 mb-5 flex items-center gap-2"
+          onClick={stopCamera}
+        ><Square size={20} /> Stop Camera
+        </button>
+      </div>
+
     </div>
   );
 }
