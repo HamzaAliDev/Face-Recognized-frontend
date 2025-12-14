@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Face Recognition System
 
-## Getting Started
+A modern web application for real-time face recognition using advanced facial detection and landmark algorithms.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Real-time Face Detection**: Detects and captures faces using TinyFaceDetector
+- **User Registration**: Simple interface to register new users with multiple face samples (6-8 images)
+- **Facial Recognition**: Identifies registered users in real-time with confidence scores
+- **WebSocket Communication**: Real-time data streaming between frontend and backend
+- **Responsive UI**: Clean, modern interface built with Tailwind CSS
+
+## Tech Stack
+
+- **Frontend Framework**: [Next.js 16](https://nextjs.org/) with React 19
+- **Face Detection**: [face-api.js](https://github.com/justadudewhohacks/face-api.js) (TinyFaceDetector + Face Landmarks)
+- **Real-time Communication**: [Socket.IO](https://socket.io/) client
+- **Styling**: Tailwind CSS v4
+- **Language**: TypeScript & JSX
+- **Package Manager**: npm
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- Modern web browser with webcam access
+- Backend service running on `http://localhost:3001` (configurable via environment variables)
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd my-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables**
+   
+   Create a `.env.local` file in the root directory:
+   ```env
+   NEXT_PUBLIC_SOCKET_URL=http://localhost:3001
+   ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+   The application will be available at `http://localhost:3000`
+
+## Usage
+
+### Main Dashboard
+- Navigate to the home page to access the face recognition system
+- Click "Register User" to add new users to the system
+- Use "Start Camera" to begin face detection
+
+### User Registration
+1. Click **Register User** from the main dashboard
+2. Enter your name and email address
+3. Start the camera and capture 6-8 clear face images
+4. Submit to register your profile
+
+### Face Recognition
+1. On the main dashboard, click **Start Camera**
+2. Position your face in view of the webcam
+3. The system will detect and recognize your face
+4. Results display with user ID and confidence score
+
+## Project Structure
+
+```
+my-app/
+├── app/
+│   ├── layout.tsx          # Root layout
+│   ├── page.tsx            # Main dashboard
+│   ├── globals.css         # Global styles
+│   └── register/
+│       └── page.jsx        # User registration page
+├── components/
+│   └── CameraCapture.jsx   # Camera capture & recognition component
+├── public/
+│   └── models/             # Pre-trained ML models
+└── package.json            # Project dependencies
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm start        # Start production server
+npm run lint     # Run ESLint
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## API Integration
 
-## Learn More
+The frontend communicates with the backend via WebSocket events:
 
-To learn more about Next.js, take a look at the following resources:
+- **Event**: `frame` - Sends captured face image to backend for recognition
+- **Event**: `recognized` - Receives recognition results with user_id and confidence
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `NEXT_PUBLIC_SOCKET_URL` | `http://localhost:3001` | Backend WebSocket server URL |
 
-## Deploy on Vercel
+## Browser Support
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Requires HTTPS or localhost for webcam access
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Notes
+
+- Models are pre-loaded on application startup
+- Captured face images are stored in the browser's state before transmission
+- Face images must be clear and unobstructed for accurate recognition
+- User registration requires 6-8 different face angles for better accuracy
+
+## License
+
+This project is open-source and available for personal and commercial use.
+
+## Support
+
+For issues or questions, please contact 
+- ✉️ Email: alihamzamashooq@gmail.com  
